@@ -2,30 +2,61 @@
 /* Customs colors */
 /* ----------------------------------------------------- */
 
-:root{
-    --col-blue-900: 230 35% 7%;
-    --col-white: 0 0% 100%;
-    --col-blue-300: 231 77% 90%;
-    /* starting with a base font weight of 400 - 16px, based on typography, we add more sizes */
-    /* use rem font sizes to respect accessibility standardss */
-    --fs-900: 9rem;
+:root {
+  --col-blue-900: 230 35% 7%;
+  --col-white: 0 0% 100%;
+  --col-blue-300: 231 77% 90%;
+  /* starting with a base font weight of 400 - 16px, based on typography, we add more sizes */
+  /* use rem font sizes to respect accessibility standardss */
+  /* 144px */
+  /* --fs-900: 9rem;
+  --fs-800: 6.25rem;
+  --fs-700: 3.5rem; */
+  /* --fs-600: 2rem; */
+  /* // 28px */
+  /* --fs-500: 1.75rem; */
+  /* --fs-400: 1.125rem; so this is 18px */
+  /* --fs-300: 1rem;
+  --fs-200: 0.875rem; */
+
+  /* font-sizes */
+  /* clamp lets you set min, middle and max size */
+  --fs-900: clamp(5rem, 8vw + 1rem, 9.375rem);
+  --fs-800: 3.5rem;
+  --fs-700: 1.5rem;
+  --fs-600: 1rem;
+  --fs-500: 1.75rem;
+  --fs-400: 0.9375rem;
+  --fs-300: 1rem;
+  --fs-200: 0.875rem;
+
+  /* font-families */
+  /* copied from kevin powell */
+  --ff-serif: "Bellefair", serif;
+  --ff-sans-cond: "Barlow Condensed", sans-serif;
+  --ff-sans-normal: "Barlow", sans-serif;
+
+  --underline-width: 0.2rem solid;
+}
+
+/* tablet screen size */
+@media (min-width: 35rem) {
+  :root {
+    --fs-800: 5rem;
+    --fs-700: 2.5rem;
+    --fs-600: 1.5rem;
+    --fs-400: 1rem;
+  }
+}
+
+@media (min-width: 45rem) {
+  :root {
+    /* font-sizes */
     --fs-800: 6.25rem;
     --fs-700: 3.5rem;
     --fs-600: 2rem;
-    --fs-500: 1.75rem;
-    --fs-400: 1.125rem; /* so this is 18px */
-    --fs-300: 1rem;
-    --fs-200: 0.875rem;
-
-    /* font-families */
-    /* copied from kevin powell */
-    --ff-serif: "Bellefair", serif;
-    --ff-sans-cond: "Barlow Condensed", sans-serif;
-    --ff-sans-normal: "Barlow", sans-serif;
-
-    --underline-width: 0.2rem solid;
-
-
+    --fs-400: 1.125rem;
+  }
 }
 
 /* ----------------------------------------------------- */
@@ -63,19 +94,22 @@ h2,
 h3,
 h4,
 h5,
-h6, p{
-    /* no bold is used in figma template so let's stick to default of 400 */
-    font-weight: 400;
+h6,
+p {
+  /* no bold is used in figma template so let's stick to default of 400 */
+  font-weight: 400;
 }
 
 /* override default line height of 1.4 */
 body {
   line-height: 1.5;
   min-height: 100vh; /* remove any issues with short pages */
-  font-family: var(--ff-sans-normal); 
+  font-family: var(--ff-sans-normal);
   font-size: var(--fs-400);
   color: hsl(var(--col-white));
   background-color: hsl(var(--col-blue-900));
+  display: grid;
+  grid-template-rows: min-content 1fr;
 }
 
 /* Make images easier to work with */
@@ -111,7 +145,12 @@ select {
 
 /* ----------------------------------------------------- */
 /* Utility Classes */
+/* One property and one property only - make it a utility class */
 /* ----------------------------------------------------- */
+
+.d-block{
+  display: block;
+}
 
 .flex {
   display: flex;
@@ -127,22 +166,65 @@ select {
 /* supposedly makes it easier to add paddings all sibling containers except for the first one, allowing for consistent padding */
 /* to deal with specificity issues => *:where(not(:first-child))  */
 .flow > * + * {
-    margin-top: var(--flow-space, 1rem);
-    /* outline: 1px solid red; */
+  margin-top: var(--flow-space, 1rem);
+  /* outline: 1px solid red; */
 }
 
 /* from what I read, containers or wrappers are utility classes used to center any and all content inside of a div */
-
 .container {
-    /* adds padding to the left and right, 0 for top and bottom */
-    padding-inline: 2em; 
-    margin-inline: auto;
-    max-width: 80rem;
+  /* adds padding to the left and right, 0 for top and bottom */
+  padding-inline: 2em;
+  margin-inline: auto;
+  max-width: 80rem;
 }
+
+.grid-container {
+  border: 5px solid green;
+  display: grid;
+  /* Use this if you struggle with issues */
+  /* grid-template-columns: minmax(2rem, 1fr) repeat(2, minmax(0, 30rem)) minmax(
+      2rem,
+      1fr
+    );
+  column-gap: var(--container-gap, 2rem); */
+  /* grid-template-columns: minmax(0px, 60rem) minmax(0px, 20rem); */
+}
+
+/* greater than tablet size */
+@media (min-width: 45rem) {
+  .grid-container {
+    column-gap: var(--container-gap, 2rem);
+    grid-template-columns: minmax(2rem, 1fr) repeat(2, minmax(0, 30rem)) minmax(
+        2rem,
+        1fr
+      );
+  }
+
+  .grid-container > *:first-child {
+    grid-column: 2;
+    outline: 1px solid red;
+  }
+
+  .grid-container > *:last-child {
+    grid-column: 3;
+    outline: 1px solid yellow;
+  }
+}
+
+/* first child that can be of any element  */
+/* .grid-container > *:first-child {
+  grid-column: 2;
+  outline: 2px solid red;
+}
+
+.grid-container > *:last-child {
+  grid-column: 3;
+  outline: 2px solid yellow;
+} */
 
 /* used for assitive technologies */
 /* leaves it in the dom, for the screen reader */
-.sr-only{
+.sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -157,73 +239,109 @@ select {
 /* colors */
 /* utility classes for colors */
 
-.bg-dark{background-color: hsl(var(--col-blue-900));}
-
-.bg-light{background-color: hsl(var(--col-blue-300));}
-
-.bg-white{background-color: hsl(var(--col-white));}
-
-.text-dark{color: hsl(var(--col-blue-900));}
-
-.text-light{color: hsl(var(--col-blue-300));}
-
-.text-white{color: hsl(var(--col-white));}
-
-/* typography */ 
-
-.ff-serif{
-    font-family: var(--ff-serif);
+.bg-dark {
+  background-color: hsl(var(--col-blue-900));
 }
 
-.ff-sans-cond{
-    font-family: var(--ff-sans-cond);
+.bg-light {
+  background-color: hsl(var(--col-blue-300));
 }
 
-.ff-sans-normal{
-    font-family: var(--ff-sans-normal);
+.bg-white {
+  background-color: hsl(var(--col-white));
 }
 
-.letter-spacing-1 { letter-spacing: 4.75px; } 
-.letter-spacing-2 { letter-spacing: 2.7px; } 
-.letter-spacing-3 { letter-spacing: 2.35px; } 
+.text-dark {
+  color: hsl(var(--col-blue-900));
+}
 
-.uppercase{text-transform: uppercase;}
+.text-light {
+  color: hsl(var(--col-blue-300));
+}
 
-.fs-900{font-size: var(--fs-900);}
-.fs-800{font-size: var(--fs-800);}
-.fs-700{font-size: var(--fs-700);}
-.fs-600{font-size: var(--fs-600);}
-.fs-500{font-size: var(--fs-500);}
-.fs-400{font-size: var(--fs-400);}
-.fs-300{font-size: var(--fs-300);}
-.fs-200{font-size: var(--fs-200);}
+.text-white {
+  color: hsl(var(--col-white));
+}
+
+/* typography */
+
+.ff-serif {
+  font-family: var(--ff-serif);
+}
+
+.ff-sans-cond {
+  font-family: var(--ff-sans-cond);
+}
+
+.ff-sans-normal {
+  font-family: var(--ff-sans-normal);
+}
+
+.letter-spacing-1 {
+  letter-spacing: 4.75px;
+}
+.letter-spacing-2 {
+  letter-spacing: 2.7px;
+}
+.letter-spacing-3 {
+  letter-spacing: 2.35px;
+}
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.fs-900 {
+  font-size: var(--fs-900);
+}
+.fs-800 {
+  font-size: var(--fs-800);
+}
+.fs-700 {
+  font-size: var(--fs-700);
+}
+.fs-600 {
+  font-size: var(--fs-600);
+}
+.fs-500 {
+  font-size: var(--fs-500);
+}
+.fs-400 {
+  font-size: var(--fs-400);
+}
+.fs-300 {
+  font-size: var(--fs-300);
+}
+.fs-200 {
+  font-size: var(--fs-200);
+}
 
 /* utility class for numbered titles */
 
-.numbered-title{
-    text-transform: uppercase;
-    font-family: var(--ff-sans-cond);
-    letter-spacing: 4px;
-    font-size: var(--fs-500);
+.numbered-title {
+  text-transform: uppercase;
+  font-family: var(--ff-sans-cond);
+  letter-spacing: 4px;
+  font-size: var(--fs-500);
 }
 
 .numbered-title span {
-    color:hsl(var(--col-white)/0.25);
-    /* em better as it scales relative to the parent container */
-    margin-right: 0.5em;
-    /* same as font weight 700 */
-    font-weight: bold;
+  color: hsl(var(--col-white) / 0.25);
+  /* em better as it scales relative to the parent container */
+  margin-right: 0.5em;
+  /* same as font weight 700 */
+  font-weight: bold;
 }
 
 /* ----------------------------------------------------- */
 /* Components */
 /* ----------------------------------------------------- */
 
-.large-button{
+.large-button {
   position: relative;
   text-decoration: none;
   padding: 0 2em;
-  display: grid;
+  display: inline-grid;
   /* modern css to get a square */
   aspect-ratio: 1;
   /* center an item in the center */
@@ -239,27 +357,27 @@ select {
   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.4);
   transform: translateY(-5px);
 } */
- 
-.large-button::after{
+
+.large-button::after {
   content: " ";
   position: absolute;
-  background: hsl(var(--col-white)/0.15);
+  background: hsl(var(--col-white) / 0.15);
   width: 100%;
   height: 100%;
   border-radius: 50%;
   z-index: -1;
   transition: transform 500ms ease-in-out;
-} 
+}
 
 /* the focus is to show the effect when the user tabs on to it */
-.large-button:hover::after, .large-button:focus::after{
+.large-button:hover::after,
+.large-button:focus::after {
   transform: scale(1.5);
-} 
-
+}
 
 /* styling navigation bar */
 
-.primary-navigation{
+.primary-navigation {
   list-style: none;
   --gap: 8rem;
   margin: 0;
@@ -271,15 +389,15 @@ select {
   text-decoration: none;
 }
 
-.primary-navigation  a > span {
+.primary-navigation a > span {
   font-weight: bold;
   margin-right: 0.5em;
 }
 
 /* select all direct descendants of this class */
-.underline-indicators > *{
+.underline-indicators > * {
   /* applies padding top and bottom */
-  padding: var(--underline-gap, 1rem) 0; 
+  padding: var(--underline-gap, 1rem) 0;
   border: 0;
   cursor: pointer;
   border-bottom: var(--underline-width) hsl(var(--col-white) / 0);
@@ -291,12 +409,58 @@ select {
   border-bottom: var(--underline-width) hsl(var(--col-white) / 0.5);
 }
 
-.underline-indicators > .active {
+.underline-indicators > .active,
+.underline-indicators > [aria-selected="true"] {
   /* applies padding top and bottom */
   border-bottom: var(--underline-width) hsl(var(--col-white) / 1);
 }
 
-.tab-button{
+.tab-button {
   --gap: 3rem;
   --underline-gap: 0.25rem;
+}
+
+.dot-indicators > * {
+  /* width: 15px;
+  height: 15px;
+  border-radius: 50%; */
+  /* more effective way to create circles are as follows */
+  aspect-ratio: 1;
+  padding: 0.5em;
+  border-radius: 50%;
+
+  border: none;
+  cursor: pointer;
+  background-color: hsl(var(--col-white) / 0.25);
+}
+
+.dot-indicators > *:hover,
+.dot-indicators > *:focus {
+  background-color: hsl(var(--col-white) / 0.5);
+}
+
+.dot-indicators > *[aria-selected="true"] {
+  background-color: hsl(var(--col-white) / 1);
+}
+
+.numbered-indicators > * {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 1px solid hsl(var(--col-white) / 0.25);
+  text-align: center;
+  cursor: pointer;
+  color: white;
+  background-color: hsl(var(--col-blue-900));
+  /* font-family: var(--ff-sans-cond); */
+}
+
+.numbered-indicators > *:hover,
+.numbered-indicators > *:focus {
+  border: 1px solid hsl(var(--col-white) / 0.75);
+}
+
+.numbered-indicators > *[aria-selected="true"] {
+  background-color: hsl(var(--col-white) / 1);
+  color: black;
 }

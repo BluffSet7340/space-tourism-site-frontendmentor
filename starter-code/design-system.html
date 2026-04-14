@@ -127,18 +127,30 @@
                     <a href="#" class="large-button uppercase ff-serif text-dark bg-white fs-600">Explore</a>
                 </div>
 
-                <div style="margin-bottom: 50vh;">
+                <div class="flow" style="margin-bottom: 50vh; --flow-space:4rem">
                     <!-- Tabs -->
-                     <div class="flex tab-button underline-indicators">
-                         <button class="active uppercase ff-sans-cond text-light letter-spacing-3 bg-dark">Moon</button>
-                         <button class="uppercase ff-sans-cond text-light letter-spacing-3 bg-dark">Mars</button>
-                         <button class="uppercase ff-sans-cond text-light letter-spacing-3 bg-dark">Europa</button>
-                     </div>
+                    <div class="flex tab-button underline-indicators">
+                        <button aria-selected="true"
+                            class="uppercase ff-sans-cond text-light letter-spacing-3 bg-dark">Moon</button>
+                        <button aria-selected="false"
+                            class="uppercase ff-sans-cond text-light letter-spacing-3 bg-dark">Mars</button>
+                        <button aria-selected="false"
+                            class="uppercase ff-sans-cond text-light letter-spacing-3 bg-dark">Europa</button>
+                    </div>
 
                     <!-- Dots -->
-
+                    <div class="dot-indicators flex">
+                        <button aria-selected="true"><span class="sr-only">Slide Title</span></button>
+                        <button aria-selected="false"><span class="sr-only">Slide Title</span></button>
+                        <button aria-selected="false"><span class="sr-only">Slide Title</span></button>
+                    </div>
 
                     <!-- Numbers -->
+                    <div class="numbered-indicators flex ff-sans-cond fs-300">
+                        <button aria-selected="true">0</button>
+                        <button aria-selected="false">0</button>
+                        <button aria-selected="false">0</button>
+                    </div>
                 </div>
             </div>
 
