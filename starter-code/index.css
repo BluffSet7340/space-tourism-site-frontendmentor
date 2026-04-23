@@ -108,6 +108,7 @@ body {
   font-size: var(--fs-400);
   color: hsl(var(--col-white));
   background-color: hsl(var(--col-blue-900));
+
   display: grid;
   grid-template-rows: min-content 1fr;
 }
@@ -148,13 +149,18 @@ select {
 /* One property and one property only - make it a utility class */
 /* ----------------------------------------------------- */
 
-.d-block{
+.d-block {
   display: block;
 }
 
 .flex {
   display: flex;
   gap: var(--gap, 1rem); /* default of 1 rem s*/
+}
+
+.flex.even-columns > * {
+  width: 100%;
+  outline: 1px solid limegreen;
 }
 
 .grid {
@@ -181,18 +187,22 @@ select {
 .grid-container {
   border: 5px solid green;
   display: grid;
-  /* Use this if you struggle with issues */
-  /* grid-template-columns: minmax(2rem, 1fr) repeat(2, minmax(0, 30rem)) minmax(
-      2rem,
-      1fr
-    );
-  column-gap: var(--container-gap, 2rem); */
-  /* grid-template-columns: minmax(0px, 60rem) minmax(0px, 20rem); */
+  text-align: center;
+  /* // justify and align items center */
+  place-items: center;
+  /* left and right padding for the english language */
+  padding-inline: 1rem;
+}
+
+.grid-container * {
+  /* relative css length unit */
+  max-width: 50ch;
 }
 
 /* greater than tablet size */
 @media (min-width: 45rem) {
   .grid-container {
+    text-align: left;
     column-gap: var(--container-gap, 2rem);
     grid-template-columns: minmax(2rem, 1fr) repeat(2, minmax(0, 30rem)) minmax(
         2rem,
@@ -209,18 +219,13 @@ select {
     grid-column: 3;
     outline: 1px solid yellow;
   }
-}
 
-/* first child that can be of any element  */
-/* .grid-container > *:first-child {
-  grid-column: 2;
-  outline: 2px solid red;
+  .grid-container--home {
+    /* limits the max padding */
+    padding-bottom: max(6rem, 20vh);
+    align-items: end;
+  }
 }
-
-.grid-container > *:last-child {
-  grid-column: 3;
-  outline: 2px solid yellow;
-} */
 
 /* used for assitive technologies */
 /* leaves it in the dom, for the screen reader */
@@ -347,16 +352,9 @@ select {
   /* center an item in the center */
   place-items: center;
   border-radius: 50%;
+  font-size: 2rem;
   z-index: 1;
 }
-
-/* Hover effect */
-/* .large-button:hover {
-  color: hsl(var(--col-blue-900) / 0.5);
-  Increase the shadow and add a slight lift effect
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.4);
-  transform: translateY(-5px);
-} */
 
 .large-button::after {
   content: " ";
@@ -463,4 +461,18 @@ select {
 .numbered-indicators > *[aria-selected="true"] {
   background-color: hsl(var(--col-white) / 1);
   color: black;
+}
+
+/* ----------------------------------------------------- */
+/* Page Specific background */
+/* ----------------------------------------------------- */
+
+body {
+  background-size: cover;
+  background-position: bottom center;
+}
+
+/* home */
+.homepage {
+  background-image: url(./assets/home/background-home-mobile.jpg);
 }
